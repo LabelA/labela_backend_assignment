@@ -38,14 +38,14 @@ class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
 
     @action(detail=True, name="Get Shopping Cart")
-    def shopping_cart(self, request, pk=None):
+    def cart(self, request, pk=None):
         """Retrieve the shopping cart for the client."""
         client = self.get_object()
         shopping_cart_items = ShoppingCartItem.objects.filter(client=client)
         serializer = ShoppingCartSerializer(shopping_cart_items, many=True)
         return Response(serializer.data)
 
-    @shopping_cart.mapping.post
+    @cart.mapping.post
     def add_to_cart(self, request, pk=None):
         """Add a product to the shopping cart."""
         client = self.get_object()
@@ -59,7 +59,7 @@ class ClientViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @shopping_cart.mapping.delete
+    @cart.mapping.delete
     def remove_from_cart(self, request, pk=None):
         """Remove a product from the shopping cart."""
         serializer = ShoppingCartDeleteSerializer(data=request.data)

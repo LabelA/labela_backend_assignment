@@ -8,60 +8,59 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Client',
+            name="Client",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=200)),
-                ('last_name', models.CharField(max_length=200)),
-                ('tel_no', models.CharField(max_length=15)),
-                ('name', models.CharField(max_length=200)),
-                ('email', models.EmailField(max_length=254)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("first_name", models.CharField(max_length=200)),
+                ("last_name", models.CharField(max_length=200)),
+                ("tel_no", models.CharField(max_length=15)),
+                ("name", models.CharField(max_length=200)),
+                ("email", models.EmailField(max_length=254)),
             ],
         ),
         migrations.CreateModel(
-            name='Order',
+            name="Order",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('address', models.TextField()),
-                ('delivery_date', models.DateTimeField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.client')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("address", models.TextField()),
+                ("delivery_date", models.DateTimeField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="api.client")),
             ],
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=200)),
-                ('model', models.CharField(max_length=200)),
-                ('brand', models.CharField(max_length=200)),
-                ('image_url', models.URLField()),
-                ('description', models.TextField()),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10)),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=200)),
+                ("model", models.CharField(max_length=200)),
+                ("brand", models.CharField(max_length=200)),
+                ("image_url", models.URLField()),
+                ("description", models.TextField()),
+                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
             ],
         ),
         migrations.CreateModel(
-            name='ShoppingCartItem',
+            name="ShoppingCartItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.IntegerField(default=1)),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.client')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.product')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("quantity", models.IntegerField(default=1)),
+                ("client", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="api.client")),
+                ("product", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="api.product")),
             ],
         ),
         migrations.CreateModel(
-            name='OrderItem',
+            name="OrderItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.IntegerField(default=1)),
-                ('rate', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.order')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.product')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("quantity", models.IntegerField(default=1)),
+                ("rate", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("order", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="api.order")),
+                ("product", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="api.product")),
             ],
         ),
     ]
