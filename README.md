@@ -65,23 +65,23 @@ If you have any questions, feel free to contact us! Any feedback on this exercis
 
 **API endpoints available**
 
-- GET /products - Get summary of all products
-- GET /products/{id} - Get a product by id
-- POST /products - Create a new product
-- PUT /products/{id} - Update a product
-- DELETE /products/{id} - Delete a product
+- GET /products/ - Get summary of all products
+- GET /products/{id}/ - Get a product by id
+- POST /products/ - Create a new product
+- PUT /products/{id}/ - Update a product
+- DELETE /products/{id}/ - Delete a product
 
-- GET /clients - Get all clients
-- GET /clients/{id} - Get a client by id
-- POST /clients - Create a new client
-- PUT /clients/{id} - Update a client
-- DELETE /clients/{id} - Delete a client
+- GET /clients/ - Get all clients
+- GET /clients/{id}/ - Get a client by id
+- POST /clients/ - Create a new client
+- PUT /clients/{id}/ - Update a client
+- DELETE /clients/{id}/ - Delete a client
 
-- GET /clients/{id}/cart - Get the shopping cart of a client
-- POST /clients/{id}/cart - Add a product to the shopping cart
-- DELETE /clients/{id}/cart - Remove a product from the shopping cart
+- GET /clients/{id}/cart/ - Get the shopping cart of a client
+- POST /clients/{id}/cart/ - Add a product to the shopping cart
+- DELETE /clients/{id}/cart/ - Remove a product from the shopping cart
 
-- POST /clients/{id}/order - Create an order for a client
+- POST /clients/{id}/order/ - Create an order for a client
 
 **TODO**
 
