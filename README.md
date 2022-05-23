@@ -53,5 +53,38 @@ If you have any questions, feel free to contact us! Any feedback on this exercis
 
 - ```docker build -t autocompany .```
 - ``` docker run -p 80:80 -d autocompany```
-- Navigate to ```http://127.0.0.1/```
+- Navigate to ```http://127.0.0.1/```, you can view the API root from here
 
+**Want to run the project locally?**
+
+- Create a python virtual environment ```python3 -m venv venv``` (optional but recommended)
+- Activate the virtual environment ```source venv/bin/activate```
+- Install the dependencies ```pip install -r requirements.txt```
+- Run the project ```python manage.py runserver```
+- Navigate to ```http://127.0.0.1/```, you can view the API root from here
+
+**API endpoints available**
+
+- GET /products/ - Get summary of all products
+- GET /products/{id}/ - Get a product by id
+- POST /products/ - Create a new product
+- PUT /products/{id}/ - Update a product
+- DELETE /products/{id}/ - Delete a product
+
+- GET /clients/ - Get all clients
+- GET /clients/{id}/ - Get a client by id
+- POST /clients/ - Create a new client
+- PUT /clients/{id}/ - Update a client
+- DELETE /clients/{id}/ - Delete a client
+
+- GET /clients/{id}/cart/ - Get the shopping cart of a client
+- POST /clients/{id}/cart/ - Add a product to the shopping cart
+- DELETE /clients/{id}/cart/ - Remove a product from the shopping cart
+
+- POST /clients/{id}/order/ - Create an order for a client
+
+**TODO**
+
+- Implement user authentication
+- Write unit tests and integration tests
+- Write detailed documentation for the API
