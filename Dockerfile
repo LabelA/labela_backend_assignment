@@ -1,5 +1,5 @@
-FROM python:3.10
-LABEL author='Label A'
+FROM python:3.8.9
+LABEL author='Sajith'
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir flake8==3.8.4 uWSGI
 
 # Regular Python dependencies
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt 
 
 # Copy our codebase into the container
 COPY . .

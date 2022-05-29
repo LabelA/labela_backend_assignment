@@ -55,3 +55,48 @@ If you have any questions, feel free to contact us! Any feedback on this exercis
 - ``` docker run -p 80:80 -d autocompany```
 - Navigate to ```http://127.0.0.1/```
 
+ # Implementation Overview
+
+This project's main scope is to create RESTful endpoints, I created RESTful endpoints. No Frontend designs were done in thi project. But each endpoint will return a readable JSON format. So, the frontend JS applications can read.
+
+So far all endpoints need Admin permission. For further development endpoints will be developed for admin and local user separately. 
+
+Run the Docker file and migrate all the tables to database and createsuperuser user using following commands
+
+```bash
+docker-compose up --build
+docker exec -it 261e658273912affcde5af python manage.py migrate
+docker exec -it 261e658273912affcde5af python manage.py createsuperuser
+```
+
+## About this project
+The project has following endpoints
+
+- admin/
+    * All the admin related tasks and DB handling can be done here
+- product/all
+    * Get all available product. This endpoint does not need admin privilege. But currently need admin permission.
+- product/add
+    * This endpoint is to add new product. This is for fully admin endpoint.
+- product/<int:pk>
+    * To view a product's information
+- product/modify/<int:pk>
+    * To edit the or delete the product data. Admins only task
+- cart/add
+    * This endpoint is for local users. Here a user can add products into his/her personal cart 
+- cart/all
+    * List all items added to the cart.
+- cart/<int:pk>
+    * This is to check a single product in the cart
+- user/add:
+    * Create a new local user can be done here.
+
+### I allocated time in following ways to manage 8 hours.
+- Understand what is needed for this project : approx. 60 minutes
+- To plan the project (To plan the needed endpoints and needed packages, Read some documentations): approx. 120 minutes
+- Design the endpoints: approx. 45 minutes
+- Model design the contents: approx. 45 minutes 
+- Develop Django Application: approx. 120 minutes
+- Test the application: approx: 30 minutes
+- Containerize the application: approx. 30 minutes
+- Testing the containerized application: approx. 30 minutes
