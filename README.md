@@ -1,57 +1,112 @@
 # Assignment
 
-Oh, hello!
----------
-First of all, awesome that you want to join our team! We already know that you're a cool person, but now we just want to know if you're a cool coder as well! To that end we've set up a basic exercise for you to complete.
+Hello Welcome to Alicia test. This is an auto company application which uses the tech stack below.
 
-**Our tech stack!**
+- Python (Django and Django rest framework) for development
+- Relational database - PostgreSQL
+- Database ORM, because using a standard is faster and more secure (default provided by Django)
 
-Before we start off, let me elaborate about our tech stack. For most projects, we use the following technologies:
+## User's Story
 
-* Python, for rapid development
-* Relational database, we mostly use PostgreSQL 
-* Widely accepted frameworks, we mostly use the Django Framework
-* Database ORM, because using a standard is faster and more secure (default provided by Django)
+- As a company, I want all my products in a database, so I can offer them via our new platform to customers
+- As a client, I want to add a product to my shopping cart, so I can order it at a later stage
+- As a client, I want to remove a product from my shopping cart, so I can tailor the order to what I actually need
+- As a client, I want to order the current contents in my shopping cart, so I can receive the products I need to repair my car
+- As a client, I want to select a delivery date and time, so I will be there to receive the order
+- As a client, I want to see an overview of all the products, so I can choose which product I want
+- As a client, I want to view the details of a product, so I can see if the product satisfies my needs
 
-The assignment
----------
-A company specialised in car parts wants to modernise their company, and start selling their parts online. Being the pro car salesmen that they are, they decided to develop the front-end via another agency. They entrust the back-end to none other than Label A.
+## How to Use the App
 
-After some initial research, we've defined the following user stories on top of our backlog:
+### Running as Production
 
-* As a company, I want all my products in a database, so I can offer them via our new platform to customers
-* As a client, I want to add a product to my shopping cart, so I can order it at a later stage
-* As a client, I want to remove a product from my shopping cart, so I can tailor the order to what I actually need
-* As a client, I want to order the current contents in my shopping cart, so I can receive the products I need to repair my car
-* As a client, I want to select a delivery date and time, so I will be there to receive the order
-* As a client, I want to see an overview of all the products, so I can choose which product I want
-* As a client, I want to view the details of a product, so I can see if the product satisfies my needs
+- Create a file named .env-prod and add the following variables
+  ```
+  SQL_ENGINE = "django.db.backends.postgresql"
+  SQL_DATABASE = "UPDATE ME"
+  SQL_USER = "UPDATE ME"
+  SQL_PASSWORD = "UPDATE ME"
+  SQL_HOST = "localhost"
+  SQL_PORT = 5432
+  SECRET_KEY = "7+om-9__!v%1ud!6-wwkf0hs0x7v1myz9jn#e9d8n@v#1^qk3p"
+  DEBUG = 0
+  DJANGO_ALLOWED_HOSTS = "localhost 127.0.0.1 [::1]"
+  ```
+- Run the App
 
-Develop an API according to the user stories defined above. You should not spend more than 8 hours on this exercise, so put on your MVP glasses and prioritise according to what you think the product should minimally entail.
+  ```
+  docker build -t autocompany:latest .
+  docker compose up
+  ```
 
-Included in this repository:
+* navigate to http://localhost:8000/admin
 
-* A freshly installed Django Framework (with not admin user -> go to this page to see how to create one: https://docs.djangoproject.com/en/1.8/intro/tutorial02/)
-* For convenience you can use .sqllite which is already configured in the project instead of PostgreSQL
-* Bonus points if you can include PostgreSQL in a Docker setup -> base Dockerfile is included
+- Run the Test
 
-We can make the following assumptions:
+  #### test
 
-* We don't have to worry about the front-end, but should think of a data format a JavaScript application can handle
-* We don't need to worry about the payment of the order. Who needs money anyway?
+  - open a new terminal, while the app is still running and run the commands below
 
-How to score bonus points (ergo: we really advise you to tackle it this way):
+  ```
+  docker-compose exec autocompany pytest
+  ```
 
-* Implement a RESTful API
-* Use a ORM
-* Document how we can set up and instantiate the project, so we can easily test it functionally
+  ### test coverage
 
-If you have any questions, feel free to contact us! Any feedback on this exercise is always welcome!
+  ```
+  docker-compose exec autocompany pytest -p no:warnings --cov=.
+  ```
 
+### Running as Local or Development
 
-**Want to run the project in Docker?**
+- Create a .env file and add the following variables
+  ```
+  SECRET_KEY = "7+om-9__!v%1ud!6-wwkf0hs0x7v1myz9jn#e9d8n@v#1^qk3p"
+  DEBUG = 0
+  DJANGO_ALLOWED_HOSTS = "localhost 127.0.0.1 [::1]"
+  ```
+- Run migrations
 
-- ```docker build -t autocompany .```
-- ``` docker run -p 80:80 -d autocompany```
-- Navigate to ```http://127.0.0.1/```
+  ```
+  python3 manage.py migration
+  ```
 
+- Run the App
+
+  ```
+  gunicorn autocompany.wsgi:application --bind 0.0.0.0:8000
+  ```
+
+* navigate to http://localhost:8000/admin
+
+- Run the Test
+
+  #### test
+
+  ```
+  pytest
+  ```
+
+  ### test coverage
+
+  ```
+  pytest -p no:warnings --cov=.
+  ```
+
+## Using admin with Docker
+
+- create admin
+  ```
+  docker-compose exec autocompany manage.py createsuperuser
+  ```
+- navigate to http://localhost:8000/admin
+
+## Using admin with Locally or Development
+
+- create admin
+
+  ```
+  python manage.py createsuperuser
+  ```
+
+- navigate to http://localhost:8000/admin
