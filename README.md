@@ -51,7 +51,70 @@ If you have any questions, feel free to contact us! Any feedback on this exercis
 
 **Want to run the project in Docker?**
 
-- ```docker build -t autocompany .```
-- ``` docker run -p 80:80 -d autocompany```
-- Navigate to ```http://127.0.0.1/```
+- ```docker-compose up```
+* login to the container with following command
+- ```docker exec -it labela_backend_assignment_web_1 /bin/sh```
+* ```labela_backend_assignment_web_1``` is the container name
+* create a superuser by running following commands to add and manage the products
+- ```python manage.py createsuperuser```
+- Navigate to ```http://127.0.0.1/8000``` or ```http://localhost:8000/```
 
+**Request to Add a Product**
+
+http://127.0.0.1:8000/product/api
+
+method:POST
+
+`{
+    "product_code": "Product001",
+    "product_name": "Park Light",
+    "unit_price": 1000,
+    "stock": 10,
+    "description": "car park light",
+    "type": "Lights",
+    "company": "Suzuki"
+}`
+
+**Request to Add a Product into Cart**
+
+http://127.0.0.1:8000/cart/api
+
+method:POST
+
+`{
+    "product_code": "Product001",
+    "quantity": 3
+}`
+
+**Request to Place an Order**
+
+http://127.0.0.1:8000/order/api
+
+method:POST
+
+`{
+    "customer" : "abc",
+    "email" : "abc@gmail.com",
+    "phone" : "0212121221",
+    "address" : "Colombo",
+    "delivery_date" : "2022-07-29",
+    "delivery_time" : "10:30:00.000000",
+    "items" :[
+        {
+            "id": 2,
+            "product_code": "Product002",
+            "unit_price": 5000,
+            "quantity": 5,
+            "total_cost": 25000,
+            "user": 2
+        },
+        {
+            "id": 3,
+            "product_code": "Product001",
+            "unit_price": 1000,
+            "quantity": 2,
+            "total_cost": 2000,
+            "user": 2
+        }
+    ]
+}`
