@@ -39,9 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'product',
-    'order',
-    'cart',
+    'carpartsapi',
 ]
 
 MIDDLEWARE = [
@@ -84,18 +82,10 @@ LOGGING = {
         },
     },
     'loggers': {
-        'store': {
+        'carpartsapi': {
             'handlers': ['file'],
             'level': 'DEBUG',
-        },
-        'cart': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-        'order': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
+        }
     }
 }
 

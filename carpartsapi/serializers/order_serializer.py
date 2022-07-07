@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from order.models import Order
+from carpartsapi.models.order_model import Order
 
 
 class OrderSerializer(serializers.ModelSerializer):

@@ -1,11 +1,11 @@
+import logging
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from cart.models import Cart
-from order.models import Order
-from order.serializers import OrderSerializer
-from product.models import Product
-import logging
+
+from carpartsapi.helper.helper import get_cart_object, get_order_object
+from carpartsapi.models.order_model import Order
+from carpartsapi.serializers.order_serializer import OrderSerializer
 
 
 class OrderListApiView(APIView):
@@ -43,43 +43,23 @@ class OrderListApiView(APIView):
             if serializer.is_valid():
                 for cart_item in cart_items_list:
                     cart_id = cart_item["id"]
-                    cart_instance = self.get_object(cart_id)
+                    cart_instance = get_cart_object(cart_id)
                     if cart_instance is not None:
                         cart_instance.delete()
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response(
-                {"response": "unable to make order without product list"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-    def get_object(self, cart_id):
-        try:
-            return Cart.objects.get(id=cart_id)
-        except Product.DoesNotExist:
-            return None
+        return Response({"response": "unable to make order without product list"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class OrderDetailApiView(APIView):
     logger = logging.getLogger(__name__)
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, order_id):
-        try:
-            return Order.objects.get(id=order_id)
-        except Cart.DoesNotExist:
-            return None
-
     def get(self, request, order_id):
-        order_instance = self.get_object(order_id)
+        order_instance = get_order_object(order_id)
         self.logger.debug("entering to the get order detail view")
         if not order_instance:
-            return Response(
-                {"response": "Object with order id does not exists"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
+            return Response({"response": "Order with order id does not exists"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = OrderSerializer(order_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)

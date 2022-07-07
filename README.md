@@ -61,7 +61,7 @@ If you have any questions, feel free to contact us! Any feedback on this exercis
 
 **Request to Add a Product**
 
-http://127.0.0.1:8000/product/api
+http://127.0.0.1:8000/product
 
 method:POST
 
@@ -77,7 +77,7 @@ method:POST
 
 **Request to Add a Product into Cart**
 
-http://127.0.0.1:8000/cart/api
+http://127.0.0.1:8000/cart
 
 method:POST
 
@@ -88,7 +88,7 @@ method:POST
 
 **Request to Place an Order**
 
-http://127.0.0.1:8000/order/api
+http://127.0.0.1:8000/order
 
 method:POST
 
