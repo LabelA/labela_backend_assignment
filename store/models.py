@@ -19,23 +19,18 @@ class Order(models.Model):
     status = models.CharField(max_length=10, choices=OrderStatus.choices, default=OrderStatus.PLANNED)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     class Meta:
         db_table = 'order'
 
 class OrderLine(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='lines')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0, null=False, blank=False)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     class Meta:
         db_table = 'order_line'
-
-    @property
-    def price(self):
-        return self.quantity * self.product.price
-
