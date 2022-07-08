@@ -15,10 +15,8 @@ class Product(models.Model):
         db_table = 'product'
 
 class Order(models.Model):
-    # products = models.ManyToManyField(Product, through='shopping_cart')
     wanted_date = models.DateTimeField(default=datetime.now ,null=False, blank=False)
     status = models.CharField(max_length=10, choices=OrderStatus.choices, default=OrderStatus.PLANNED)
-    #total # Should be a derived field, Make the change in the serializer
 
     def __str__(self):
         return self.id
