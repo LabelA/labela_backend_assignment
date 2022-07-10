@@ -6,7 +6,7 @@ class Product(models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     description = models.CharField(max_length=200, null=False, blank=False)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=15, null=False, blank=False)
-    qty_in_stcok = models.IntegerField(default=0, null=False, blank=False)
+    qty_in_stock = models.IntegerField(default=0, null=False, blank=False)
 
     def __str__(self):
         return self.title
