@@ -2,8 +2,9 @@ from datetime import datetime
 from itertools import product
 import pytz
 from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
 from store.models import Order, OrderLine, Product
 from store.serializers import OrderLineSerializer, OrderSerializer, ProductSerializer
 
@@ -11,6 +12,11 @@ class ProductApi(viewsets.ModelViewSet):
 
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
+
+    def get_permissions(self):
+        if self.action in ('update', 'create', 'destroy', 'add_inventory_quantity'):
+            self.permission_classes = [IsAdminUser,]
+        return super(self.__class__, self).get_permissions()
 
     # Create, Delete and Direct Update options are only available to Admins
     def create(self, request, *args, **kwargs):
