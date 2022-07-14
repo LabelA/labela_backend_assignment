@@ -1,11 +1,30 @@
 version: '3'
 
 services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRESS_USER}
+      POSTGRES_DB: ${POSTGRESS_DB}
+      POSTGRES_PASS: ${POSTGRESS_PASS}
+    volumes:
+      - database:/var/lib/posgresql/data
   app:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      POSTGRESS_USER: ${POSTGRESS_USER}
+      POSTGRESS_DB: ${POSTGRESS_DB}
+      POSTGRESS_PASS: ${POSTGRESS_PASS}
     volumes:
       - .:/app
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+volumes:
+  database:
