@@ -1,0 +1,39 @@
+version: "3.9"
+
+
+services:
+  db:
+    container_name: autocompany-db
+    image: postgres:14-alpine
+    volumes:
+      - postgresdata:/data/postgres
+      - postgresdbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=autocompany
+      - POSTGRES_USER=autocompany
+      - POSTGRES_PASSWORD=postgres
+
+  web:
+    container_name: autocompany-api
+    build:
+      context: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - db.env
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_DB=autocompany
+      - POSTGRES_USER=autocompany
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgresdata:
+    driver: local
+  postgresdbdata:
+    driver: local
