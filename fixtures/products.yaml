@@ -1,0 +1,37 @@
+- model: inventory.Brand
+  pk: 5c44b1ee-ab70-4b0e-a26e-52f830b5f69d
+  fields:
+    name: TestBrand1
+    is_active: True
+    created_at: 2022-03-16T17:41:28+00:00
+    updated_at: 2022-03-16T17:41:28+00:00
+- model: inventory.Brand
+  pk: 1a64a132-6294-4d79-ab10-413e559d1b1f
+  fields:
+    name: TestBrand2
+    is_active: True
+    created_at: 2022-03-16T17:41:28+00:00
+    updated_at: 2022-03-16T17:41:28+00:00
+
+- model: inventory.Product
+  pk: 5c44b1ee-ab70-4b0e-a26e-52f830b5f69d
+  fields:
+    title: TestProduct1
+    brand: 5c44b1ee-ab70-4b0e-a26e-52f830b5f69d
+    price: 250
+    discounted_price: 200
+    description: "Test Product 1"
+    is_active: True
+    created_at: 2022-03-16T17:41:28+00:00
+    updated_at: 2022-03-16T17:41:28+00:00
+- model: inventory.Product
+  pk: 1a64a132-6294-4d79-ab10-413e559d1b1f
+  fields:
+    title: TestProduct2
+    brand: 1a64a132-6294-4d79-ab10-413e559d1b1f
+    price: 100
+    discounted_price: 99
+    description: "Test Product 1"
+    is_active: True
+    created_at: 2022-03-16T17:41:28+00:00
+    updated_at: 2022-03-16T17:41:28+00:00
