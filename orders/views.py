@@ -6,14 +6,18 @@ from orders.serializers import OrderSerializer, OrderCreateSerializer
 from orders.models import Product
 from carts.models import Cart
 
+
 class Orders(ModelViewSet):
-    queryset= Order.objects.all()
-    serializer_class=OrderSerializer
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
     pagination_class = PageNumberPagination
-    page_size=2
+    page_size = 2
     http_methods = {
-        'get': ['get', 'list'],    # Allow GET for both retrieve (GET) and list (GET) actions
-        'post': ['create'],         # Allow POST for create action
+        "get": [
+            "get",
+            "list",
+        ],  # Allow GET for both retrieve (GET) and list (GET) actions
+        "post": ["create"],  # Allow POST for create action
     }
 
     def create(self, request, pk=None):
@@ -21,10 +25,12 @@ class Orders(ModelViewSet):
             serializer = OrderCreateSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
 
-            cart = serializer.validated_data.get('cart')
+            cart = serializer.validated_data.get("cart")
             items = cart.items.all()
 
-            order = Order.objects.create(delivery_date=serializer.validated_data.get("delivery_date"))
+            order = Order.objects.create(
+                delivery_date=serializer.validated_data.get("delivery_date")
+            )
             order.items.add(*items)
             order.save()
 

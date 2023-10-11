@@ -3,11 +3,8 @@ from carts.views import Carts
 
 route = routers.DefaultRouter()
 
-route.register(
-    r'carts', Carts, basename="Carts"
-)
+route.register(r"carts", Carts, basename="Carts")
 
-urlpatterns = [
-]
+urlpatterns = []
 
 urlpatterns = urlpatterns + route.urls

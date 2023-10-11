@@ -3,11 +3,8 @@ from orders.views import Orders
 
 route = routers.DefaultRouter()
 
-route.register(
-    r'orders', Orders, basename="Orders"
-)
+route.register(r"orders", Orders, basename="Orders")
 
-urlpatterns = [
-]
+urlpatterns = []
 
 urlpatterns = urlpatterns + route.urls

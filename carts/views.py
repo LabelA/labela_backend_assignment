@@ -6,16 +6,17 @@ from rest_framework.pagination import PageNumberPagination
 from products.models import Product
 from rest_framework.decorators import action
 
+
 class Carts(ModelViewSet):
-    queryset= Cart.objects.all()
-    serializer_class=CartSerializer
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
     pagination_class = PageNumberPagination
-    page_size=2
+    page_size = 2
 
     def partial_update(self, request, pk=None):
         try:
             cart = Cart.objects.get(pk=pk)
-            id = request.data.get('id')
+            id = request.data.get("id")
             product = Product.objects.get(pk=id)
 
             cart.items.add(product)
@@ -27,11 +28,11 @@ class Carts(ModelViewSet):
         except Cart.DoesNotExist:
             return Response("Cart does not exist")
 
-    @action(detail=True, methods=['DELETE'], name='delete item')
+    @action(detail=True, methods=["DELETE"], name="delete item")
     def delete_item(self, request, pk=None):
         try:
             cart = Cart.objects.get(pk=pk)
-            id = request.data.get('id')
+            id = request.data.get("id")
             product = Product.objects.get(pk=id)
 
             cart.items.remove(product)
@@ -42,4 +43,3 @@ class Carts(ModelViewSet):
             return Response("Product does not exist")
         except Cart.DoesNotExist:
             return Response("Cart does not exist")
-        
