@@ -16,13 +16,13 @@ COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy our codebase into the container
-COPY . .
+COPY . /app
 
 RUN ./manage.py collectstatic --noinput
 
 # Ops Parameters
 ENV WORKERS=2
-ENV PORT=80
+ENV PORT=8000
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE ${PORT}
