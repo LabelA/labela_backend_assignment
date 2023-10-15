@@ -32,7 +32,7 @@ class Orders(ModelViewSet):
 
             order = Order.objects.create(
                 delivery_date=serializer.validated_data.get("delivery_date"),
-                customer = customer
+                customer=customer,
             )
             order.save()
             for item in items:

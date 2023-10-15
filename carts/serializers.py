@@ -12,9 +12,10 @@ class CartEntrySerializer(ModelSerializer):
         model = CartEntry
         fields = ("id", "product", "quantity")
 
+
 class CartSerializer(ModelSerializer):
-    cart_entry = CartEntrySerializer(many=True)
+    cart_entries = CartEntrySerializer(many=True)
 
     class Meta:
         model = Cart
-        fields = ("id", "cart_entry")
+        fields = ("id", "cart_entries")

@@ -9,12 +9,12 @@ from carts.serializers import CartEntrySerializer
 
 
 class OrderSerializer(ModelSerializer):
-    order_entry = CartEntrySerializer(many=True, required=False)
+    order_entries = CartEntrySerializer(many=True, required=False)
     customer = CustomerSerializer()
 
     class Meta:
         model = Order
-        fields = ("id", "order_entry", "customer", "delivery_date")
+        fields = ("id", "order_entries", "customer", "delivery_date")
 
 
 class OrderCreateSerializer(Serializer):

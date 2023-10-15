@@ -5,21 +5,25 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('carts', '0001_initial'),
+        ("carts", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Order',
+            name="Order",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('delivery_date', models.DateTimeField()),
-                ('cart_entries', models.ManyToManyField(to='carts.cartentry')),
-                ('customer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='carts.customer')),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("delivery_date", models.DateTimeField()),
+                ("cart_entries", models.ManyToManyField(to="carts.cartentry")),
+                (
+                    "customer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="carts.customer"
+                    ),
+                ),
             ],
         ),
     ]

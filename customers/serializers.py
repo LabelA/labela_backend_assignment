@@ -9,4 +9,4 @@ class CustomerSerializer(ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ("id","name", "address", "cart")
+        fields = ("id", "name", "address", "cart")
