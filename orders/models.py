@@ -1,10 +1,10 @@
 from django.db import models
-from products.models import Product
+from carts.models import CartEntry
+from customers.models import Customer
 
 # Create your models here.
 
-
 class Order(models.Model):
     id = models.AutoField(primary_key=True)
-    items = models.ManyToManyField(Product, related_name="order_product")
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     delivery_date = models.DateTimeField()

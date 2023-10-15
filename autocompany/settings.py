@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "products",
     "carts",
     "orders",
+    "customers",
+    "django_seed",
 ]
 
 MIDDLEWARE = [
@@ -83,7 +85,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": os.environ.get("DJANGO_DB_HOST", "127.0.0.1"),
         "PORT": os.environ.get("DJANGO_DB_PORT", "5432"),
-        "NAME": os.environ.get("DJANGO_DB_NAME", "automobile"),
+        "NAME": os.environ.get("DJANGO_DB_NAME", "sahandb"),
         "USER": os.environ.get("DJANGO_DB_USER", "postgres"),
         "PASSWORD": os.environ.get("DJANGO_DB_PASSWORD", "abc123"),
     }

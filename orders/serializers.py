@@ -1,17 +1,20 @@
 from rest_framework.serializers import ModelSerializer, Serializer
-from rest_framework import serializers
-from orders.models import Order
+from rest_framework import serializers, status
+from orders.models import Order, Customer
 from carts.models import Cart
-from products.serializers import ProductSerializer
+from customers.serializers import CustomerSerializer
+
 from rest_framework.response import Response
+from carts.serializers import CartEntrySerializer
 
 
 class OrderSerializer(ModelSerializer):
-    items = ProductSerializer(many=True, required=False)
+    order_entry = CartEntrySerializer(many=True, required=False)
+    customer = CustomerSerializer()
 
     class Meta:
         model = Order
-        fields = ("id", "items", "delivery_date")
+        fields = ("id", "order_entry", "customer", "delivery_date")
 
 
 class OrderCreateSerializer(Serializer):
@@ -22,8 +25,12 @@ class OrderCreateSerializer(Serializer):
         try:
             cart_id = attrs.get("cart_id")
             cart = Cart.objects.get(pk=cart_id)
+            cust = cart.customer
 
             attrs["cart"] = cart
+            attrs["customer"] = cust
             return attrs
         except Cart.DoesNotExist:
-            return Response("Cart not Valid")
+            return Response("Cart not Valid", status=status.HTTP_400_BAD_REQUEST)
+        except Customer.DoesNotExist:
+            return Response("Customer not Valid", status=status.HTTP_400_BAD_REQUEST)

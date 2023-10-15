@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from orders.models import Order
 from orders.serializers import OrderSerializer, OrderCreateSerializer
-from orders.models import Product
+from products.models import Product
 from carts.models import Cart
 
 
@@ -26,16 +26,20 @@ class Orders(ModelViewSet):
             serializer.is_valid(raise_exception=True)
 
             cart = serializer.validated_data.get("cart")
-            items = cart.items.all()
+            items = cart.cart_entry.all()
+
+            customer = serializer.validated_data.get("customer")
 
             order = Order.objects.create(
-                delivery_date=serializer.validated_data.get("delivery_date")
+                delivery_date=serializer.validated_data.get("delivery_date"),
+                customer = customer
             )
-            order.items.add(*items)
             order.save()
+            for item in items:
+                item.order_id = order
+                item.save()
 
-            cart.items.clear()
-            cart.save()
+            # cart.cart_entry.all().delete()
 
             serialized_order = OrderSerializer(order)
             return Response(serialized_order.data)

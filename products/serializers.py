@@ -4,9 +4,9 @@ from products.models import Product
 
 
 class ProductSerializer(ModelSerializer):
-    id = serializers.IntegerField(required=False)
     name = serializers.CharField()
+    price = serializers.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         model = Product
-        fields = ("id", "name")
+        fields = ("name", "price")

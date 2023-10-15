@@ -1,8 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from carts.models import Cart
+from carts.models import Cart, CartEntry
 from carts.serializers import CartSerializer
 from rest_framework.pagination import PageNumberPagination
+from customers.models import Customer
 from products.models import Product
 from rest_framework.decorators import action
 
@@ -16,11 +17,14 @@ class Carts(ModelViewSet):
     def partial_update(self, request, pk=None):
         try:
             cart = Cart.objects.get(pk=pk)
-            id = request.data.get("id")
+            id = request.data.get("product_id")
             product = Product.objects.get(pk=id)
 
-            cart.items.add(product)
-            cart.save()
+            CartEntry.objects.create(
+                product=product,
+                quantity=request.data.get("quantity", 1),
+                cart_id=cart,
+            )
             serialized_cart = CartSerializer(cart)
             return Response(serialized_cart.data)
         except Product.DoesNotExist:
