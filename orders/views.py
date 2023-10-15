@@ -26,7 +26,7 @@ class Orders(ModelViewSet):
             serializer.is_valid(raise_exception=True)
 
             cart = serializer.validated_data.get("cart")
-            items = cart.cart_entry.all()
+            items = cart.cart_entries.all()
 
             customer = serializer.validated_data.get("customer")
 
@@ -39,7 +39,7 @@ class Orders(ModelViewSet):
                 item.order_id = order
                 item.save()
 
-            # cart.cart_entry.all().delete()
+            cart.cart_entries.all().delete()
 
             serialized_order = OrderSerializer(order)
             return Response(serialized_order.data)
