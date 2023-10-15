@@ -10,6 +10,8 @@ class Command(BaseCommand):
             [
                 Product(name="Engine", price=100),
                 Product(name="Door", price=40),
+                Product(name="Window", price=30),
+                Product(name="Wheel", price=50),
             ]
         )
 
