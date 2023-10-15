@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 from django.core.management.base import BaseCommand
 from products.models import Product
 from customers.models import Customer

@@ -1,5 +1,4 @@
 from django.db import models
-from carts.models import CartEntry
 from customers.models import Customer
 
 # Create your models here.

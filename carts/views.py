@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from carts.models import Cart, CartEntry
 from carts.serializers import CartSerializer
 from rest_framework.pagination import PageNumberPagination
-from customers.models import Customer
 from products.models import Product
 from rest_framework.decorators import action
 
