@@ -27,4 +27,4 @@ ENV PYTHONUNBUFFERED=1
 
 EXPOSE ${PORT}
 
-CMD uwsgi --http :${PORT} --processes ${WORKERS} --static-map /static=/static --module autocompany.wsgi:application
+CMD ./manage.py migrate && uwsgi --http :${PORT} --processes ${WORKERS} --static-map /static=/static --module autocompany.wsgi:application
