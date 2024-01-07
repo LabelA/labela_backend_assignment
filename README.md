@@ -55,3 +55,171 @@ If you have any questions, feel free to contact us! Any feedback on this exercis
 - ``` docker run -p 80:80 -d autocompany```
 - Navigate to ```http://127.0.0.1/```
 
+# Project Setup Guidelines
+
+#### Assumptions
+
+- admin or superuser only can add, edit and delete the products.
+- no login needed to view the product list and details of a product.
+- login needed to add products into cart and to make orders.
+- order quantity should be less than available stock.
+- order delivery date cannot be in the past.
+- user only can view their orders.
+- admin can view list of orders.
+- available stock will be deducted when user add to cart.
+- available stock will be retained if user the cart.
+- cart item will be cleared once made the order.
+
+### Features covered
+
+- user registration added.
+- admin can add, edit and delete the products.
+- any(unregistered) user can view the list of products.
+- any(unregistered) user can view detail of a product.
+- registered user only can add the product to cart.
+- registered user only can delete the cart.
+- registered user can make order with the cart content.
+- registered user should mention the delivery date and time when make the order.
+
+### Technologies Used
+
+- Python Django framework
+- Postgres db
+- Django inbuilt ORM
+
+#### To Setup and Start
+
+- clone the repo
+- run ```docker-compose build``` from root directory.
+- run ```docker-compose up```
+- login to the container with following command to create a superuser.
+- ```docker exec -it labela_backend_assignment_web_1 /bin/bash```
+- ```labela_backend_assignment_web_1``` is the container name, if it is different, change it accordingly.
+- create a superuser by running following commands inside the container.
+- ```python manage.py createsuperuser```
+- give necessary inputs.
+- Navigate to ```http://127.0.0.1/8000``` or ```http://localhost:8000/``` via a browser.
+- you can use django rest framework inbuilt Web browsable API to make requests which is most user-friendly.
+
+### Sample Requests, Responses for the features
+
+Product
+##### add products into db
+ 
+- Login via Django Rest framework Web browsable API http://127.0.0.1:8000/api-auth/login by using created superuser.
+- navigate to http://127.0.0.1:8000/product
+- `{
+        "product_code": "001",
+        "product_name": "Fog Light",
+        "unit_price": "10000.00",
+        "available_stock": 50,
+        "is_available": true,
+        "description": "Toyota Fog Light",
+        "type": "Lights",
+        "company": "Toyota"
+    }`
+- make the POST request with above type of json.
+- sample response will be like below.
+- `{
+        "id": 1,
+        "product_code": "001",
+        "product_name": "Fog Light",
+        "unit_price": "10000.00",
+        "available_stock": 50,
+        "is_available": true,
+        "description": "Toyota Fog Light",
+        "type": "Lights",
+        "company": "Toyota",
+        "created": "2024-01-07T16:48:20.239962Z",
+        "updated": "2024-01-07T16:48:20.239975Z"
+    }`
+
+##### edit/delete/get a product
+
+- endpoint http://127.0.0.1:8000/product/001/
+- 001 is a product_id
+
+Cart
+##### add a product to cart
+
+- do register into the system.
+- endpoint http://127.0.0.1:8000/register
+- sample request body [POST]
+- `{
+    "username": "test_user1",
+    "password1": "test_user1",
+    "password2": "test_user1",
+    "email": "test_user1@gmail.com"
+  }`
+- sample response "user registration success".
+- login via http://127.0.0.1:8000/api-auth/login using above user.
+- navigate to http://127.0.0.1:8000/cart endpoint.
+- sample request body [POST]
+- `{
+    "product_code": "001",
+    "quantity": 2
+  }`
+- sample response will be like below.
+- `{
+    "id": 1,
+    "product_code": "001",
+    "unit_price": "10000.00",
+    "quantity": 2,
+    "total_cost": "20000.00",
+    "user": 2
+  }`
+
+
+##### delete/get a cart
+
+- sample request endpoint http://127.0.0.1:8000/cart/1/
+- 1 is a cart id.
+- sample response
+- `{
+    "id": 1,
+    "product_code": "001",
+    "unit_price": "10000.00",
+    "quantity": 2,
+    "total_cost": "20000.00",
+    "user": 2
+  }`
+
+Order
+##### make an order with cart item
+
+- request endpoint http://127.0.0.1:8000/order [POST]
+- sample request
+- `{
+    "customer": "John",
+    "email": "john@gmail.com",
+    "phone": "+9648769871",
+    "address": "Colombo",
+    "delivery_date": "2024-01-30",
+    "delivery_time": "10:30:00",
+    "items": [
+        {
+            "id": 1,
+            "product_code": "001",
+            "unit_price": "10000.00",
+            "quantity": 2,
+            "total_cost": "20000.00",
+            "user": 2
+        }
+    ]
+  }`
+- sample response
+- `{
+    "id": 1,
+    "customer": "John",
+    "email": "john@gmail.com",
+    "phone": "+9648769871",
+    "address": "Colombo",
+    "status": "PENDING",
+    "total_payment": "20000.00",
+    "delivery_date": "2024-01-30",
+    "delivery_time": "10:30:00",
+    "created": "2024-01-07T18:19:50.317176Z",
+    "updated": "2024-01-07T18:19:50.317187Z",
+    "user": 2
+  }`
+
