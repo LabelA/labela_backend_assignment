@@ -31,6 +31,12 @@ class CartListApiView(APIView):
         if quantity is None or quantity == '':
             return Response({"response": "quantity field is missing"},
                             status=status.HTTP_400_BAD_REQUEST)
+        try:
+            quantity = int(quantity)
+        except ValueError:
+            return Response({"response": "quantity must be a numeric value"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
         user = request.user.id
         product_instance = get_product_object(product_code)
         if product_instance is not None and product_instance.is_available:

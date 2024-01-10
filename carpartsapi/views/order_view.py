@@ -29,7 +29,11 @@ class OrderListApiView(APIView):
         cost = 0.0
         if cart_items_list is not None and cart_items_list != []:
             for cart_item in cart_items_list:
-                cost = cost + float(cart_item["total_cost"])
+                try:
+                    cost = cost + float(cart_item["total_cost"])
+                except ValueError:
+                    return Response({"response": "total_cost must be a numeric value"},
+                                    status=status.HTTP_400_BAD_REQUEST)
 
             data = {
                 'user': request.user.id,
