@@ -192,7 +192,7 @@ Order
 - `{
     "customer": "John",
     "email": "john@gmail.com",
-    "phone": "+9648769871",
+    "phone": "+94773945782",
     "address": "Colombo",
     "delivery_date": "2024-01-30",
     "delivery_time": "10:30:00",
@@ -212,7 +212,7 @@ Order
     "id": 1,
     "customer": "John",
     "email": "john@gmail.com",
-    "phone": "+9648769871",
+    "phone": "+94773945782",
     "address": "Colombo",
     "status": "PENDING",
     "total_payment": "20000.00",
@@ -223,3 +223,40 @@ Order
     "user": 2
   }`
 
+
+#### Postman Collection
+Product List
+
+`curl --location --request GET 'http://127.0.0.1:8000/product' \
+--header 'Cookie: csrftoken=DzkZ4iZErrk8uMS6wShaMFUdA9BcynA5R2fXEonbgjC9GpzDZ67gqf5ykYcCZZSG; sessionid=qur4cm64e704fory8f75covhgbpjbc2t'
+`
+
+Product
+
+`curl --location --request GET 'http://127.0.0.1:8000/product/001' \
+--header 'Cookie: csrftoken=DzkZ4iZErrk8uMS6wShaMFUdA9BcynA5R2fXEonbgjC9GpzDZ67gqf5ykYcCZZSG; sessionid=qur4cm64e704fory8f75covhgbpjbc2t'
+`
+
+Cart List
+
+`curl --location --request GET 'http://127.0.0.1:8000/cart' \
+--header 'Cookie: csrftoken=DzkZ4iZErrk8uMS6wShaMFUdA9BcynA5R2fXEonbgjC9GpzDZ67gqf5ykYcCZZSG; sessionid=qur4cm64e704fory8f75covhgbpjbc2t'
+`
+
+Cart
+
+`curl --location --request GET 'http://127.0.0.1:8000/cart/1' \
+--header 'Cookie: csrftoken=SZnSVF5n3WSFkkhVsVVWsg1LtcnJ9kG5neOnWmv6aoxuPREvDy1PxSIoWw2XCgCV; sessionid=qur4cm64e704fory8f75covhgbpjbc2t'
+`
+
+Order List
+
+`curl --location --request GET 'http://127.0.0.1:8000/order' \
+--header 'Cookie: csrftoken=SZnSVF5n3WSFkkhVsVVWsg1LtcnJ9kG5neOnWmv6aoxuPREvDy1PxSIoWw2XCgCV; sessionid=qur4cm64e704fory8f75covhgbpjbc2t'
+`
+
+Order
+
+`curl --location --request GET 'http://127.0.0.1:8000/order/1' \
+--header 'Cookie: csrftoken=SZnSVF5n3WSFkkhVsVVWsg1LtcnJ9kG5neOnWmv6aoxuPREvDy1PxSIoWw2XCgCV; sessionid=qur4cm64e704fory8f75covhgbpjbc2t'
+`
