@@ -3,7 +3,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from carpartsapi.helper.helper import get_product_object, get_cart_object
+from carpartsapi.helper.helper import get_product_object, get_cart_object, populate_pagination
 from carpartsapi.models.cart_model import Cart
 from carpartsapi.serializers.cart_serializer import CartSerializer
 
@@ -13,7 +13,10 @@ class CartListApiView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        carts = Cart.objects.filter(user=request.user.id)
+        carts = Cart.objects.filter(user=request.user.id).order_by('id')
+
+        page = request.GET.get("page")
+        carts = populate_pagination(page, carts)
         serializer = CartSerializer(carts, many=True)
         self.logger.debug("entering to the get cart list view")
         return Response(serializer.data, status=status.HTTP_200_OK)

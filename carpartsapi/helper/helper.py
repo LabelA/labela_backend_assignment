@@ -2,11 +2,14 @@ import logging
 
 from carpartsapi.exceptions.exceptions import ProductDoesNotExistException, CartDoesNotExistException, \
     OrderDoesNotExistException
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from carpartsapi.models.cart_model import Cart
 from carpartsapi.models.order_model import Order
 from carpartsapi.models.product_model import Product
 
 logger = logging.getLogger(__name__)
+
+PER_PAGE_COUNT = 10
 
 
 def get_product_object(product_code):
@@ -34,3 +37,14 @@ def get_order_object(order_id):
         message = "Order not found for the order_id : {}".format(order_id)
         logger.error(message)
         raise OrderDoesNotExistException("403", "Invalid order_id", message)
+
+
+def populate_pagination(page, pagination_object):
+    paginator = Paginator(pagination_object, PER_PAGE_COUNT)
+    try:
+        pagination_object = paginator.page(page)
+    except PageNotAnInteger:
+        pagination_object = paginator.page(1)
+    except EmptyPage:
+        pagination_object = paginator.page(paginator.num_pages)
+    return pagination_object

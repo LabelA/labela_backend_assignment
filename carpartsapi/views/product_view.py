@@ -3,7 +3,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from carpartsapi.helper.helper import get_product_object
+from carpartsapi.helper.helper import get_product_object, populate_pagination
 from carpartsapi.serializers.product_serializer import ProductSerializer
 from carpartsapi.models.product_model import Product
 
@@ -12,7 +12,9 @@ class ProductListApiView(APIView):
     logger = logging.getLogger(__name__)
 
     def get(self, request):
-        products = Product.objects.all()
+        products = Product.objects.all().order_by('id')
+        page = request.GET.get("page")
+        products = populate_pagination(page, products)
         serializer = ProductSerializer(products, many=True)
         self.logger.debug("entering to the get product list view")
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -3,7 +3,7 @@ from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from carpartsapi.helper.helper import get_cart_object, get_order_object
+from carpartsapi.helper.helper import get_cart_object, get_order_object, populate_pagination
 from carpartsapi.models.order_model import Order
 from carpartsapi.serializers.order_serializer import OrderSerializer
 
@@ -14,9 +14,11 @@ class OrderListApiView(APIView):
 
     def get(self, request):
         if request.user.is_superuser:
-            orders = Order.objects.filter()
+            orders = Order.objects.filter().order_by('id')
         else:
-            orders = Order.objects.filter(user=request.user.id)
+            orders = Order.objects.filter(user=request.user.id).order_by('id')
+        page = request.GET.get("page")
+        orders = populate_pagination(page, orders)
         serializer = OrderSerializer(orders, many=True)
         self.logger.debug("entering to the get orders list view")
         return Response(serializer.data, status=status.HTTP_200_OK)
